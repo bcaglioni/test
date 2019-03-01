@@ -1,0 +1,43 @@
+**** PROPERTIES SKAFFOLDER ****
+{
+    "overwrite": false,
+    "forEachObj": "resource",
+    "_partials": [
+        {
+            "name": "Partial documentation",
+            "tagFrom": "// start documentation",
+            "tagTo": "// end documentation",
+            "template": "{{#notNull resource._entity}}/*\n * SCHEMA DB {{resource._entity.name}}\n * \n\t{\n\t\t{{#each resource._entity._attrs}}\n\t\t{{name}}: {\n\t\t\ttype: '{{type}}'{{#required}}, \n\t\t\trequired : true{{/required}}{{#unique}},\n\t\t\tunique : true, {{/unique}}{{#if _enum}},\n\t\t\tenum : {{#joinObj _enum 'name'}}{{/joinObj}}, {{/if}}\n\t\t},\n\t\t{{/each}}\n\t\t//RELATIONS\n\t\t{{#each resource._relations}}\n\t\t\t{{#equal _ent1.name ../name}}\n\t\t{{name}}: {{#equal type 'm:m'}}[{{/equal}}{\n\t\t\ttype: Schema.ObjectId{{#required}}, \n\t\t\trequired : true{{/required}},\n\t\t\tref : \"{{_ent2.name}}\"\n\t\t}{{#equal type 'm:m'}}]{{/equal}},\n\t\t\t{{/equal}}\n\t\t{{/each}}\n\t\t\n\t\t\n\t\t//EXTERNAL RELATIONS\n\t\t\n\t\t{{#each resource._relations}}\n\t\t\t{{#notEqual _ent1.name ../name}}\n\t\t{{name}}: {{#equal type 'm:m'}}[{{/equal}}{\n\t\t\ttype: Schema.ObjectId{{#required}}, \n\t\t\trequired : true{{/required}},\n\t\t\tref : \"{{_ent1.name}}\"\n\t\t}{{#equal type 'm:m'}}]{{/equal}},\n\t\t\t{{/notEqual}}\n\t\t{{/each}}\n\t\t\n\t}\n * \n * \n * \n * \n{{#each resource._services}}\n\t\t{{#equal crudAction null}}\n\t\tName: {{name}}\n\t\tDescription: {{description}}\n\t\tParams: {{#each _params}}\n\t\t\t{{type}} {{name}} - {{description}}{{/each}}\n\t\t{{/equal}}\n{{/each}}\n * \n * \n * \n * \n */{{/notNull}}"
+        }
+    ]
+}
+**** END PROPERTIES SKAFFOLDER ****
+
+const app = require('../../../app.js');
+const db_{{db.name}} = require('../../../db/{{db.name}}_schema.js');
+const logger = require('../../../logger.js');
+const handleError = require('../../../security/util.js').handleError;
+const properties = require('../../../properties.js');
+
+
+// start documentation
+// end documentation
+
+// INSERT HERE YOURS CUSTOM METHODS
+
+
+{{#each resource._services}}
+		{{#equal crudAction null}}
+
+/*
+Name: {{name}}
+Description: {{description}}
+Params: {{#each _params}}
+	{{type}} {{name}} - {{description}}{{/each}}
+*/
+app['{{lowercase method}}'](properties.api + '{{../resource.url}}{{#editUrlParam url}}{{/editUrlParam}}', function(req, res){
+	res.send([]);
+});
+			
+		{{/equal}}
+{{/each}}

@@ -5,10 +5,10 @@ import { CanActivate, RouterModule, Routes } from '@angular/router';
 /* START MY VIEWS IMPORT */
 // Do not edit this comment content, it will be overwritten in next Skaffolder generation
 import { HomeComponent} from './pages/home/home.component';
-import { CompanyComponent} from './pages/company/company.component';
-import { CompanyEditComponent} from './pages/company-edit/company-edit.component';
-import { ContactDetailComponent} from './pages/contact-detail/contact-detail.component';
-import { ContactEditComponent} from './pages/contact-edit/contact-edit.component';
+import { RoomEditComponent} from './pages/room-edit/room-edit.component';
+import { RoomListComponent} from './pages/room-list/room-list.component';
+import { SedeComponent} from './pages/sede/sede.component';
+import { SedeEditComponent} from './pages/sede-edit/sede-edit.component';
 
 /* END MY VIEWS IMPORT */
 
@@ -27,11 +27,11 @@ const routes: Routes = [
 
     /* START MY VIEWS */
 
-    { path: 'company',  component: CompanyComponent  },
-    { path: 'company/:id',  component: CompanyEditComponent  },
-    { path: 'contacts/:id/detail',  component: ContactDetailComponent  },
-    { path: 'contacts/:id',  component: ContactEditComponent  },
-    { path: 'home',  component: HomeComponent  },
+    { path: 'home',  component: HomeComponent , canActivate: [AuthGuard] },
+    { path: 'rooms/:id',  component: RoomEditComponent , canActivate: [AuthGuard] },
+    { path: 'rooms',  component: RoomListComponent  },
+    { path: 'sede',  component: SedeComponent  },
+    { path: 'company/:id',  component: SedeEditComponent  },
 
  /* END MY VIEWS */
     

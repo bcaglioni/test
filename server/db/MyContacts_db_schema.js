@@ -30,38 +30,9 @@ const db_MyContacts_db = [];
 
 
  /**
-  * Company
+  * Room
   */
-db_MyContacts_db_schema.Company = new mongoose.Schema({
-	address: {
-		type: 'String'
-	},
-	mail: {
-		type: 'String'
-	},
-	name: {
-		type: 'String'
-	},
-	//RELATIONS
-	
-	
-	//EXTERNAL RELATIONS
-	/*
-	company: {
-		type: Schema.ObjectId,
-		ref : "Contact"
-	},
-	*/
-});
-
-
- /**
-  * Contact
-  */
-db_MyContacts_db_schema.Contact = new mongoose.Schema({
-	email: {
-		type: 'String'
-	},
+db_MyContacts_db_schema.Room = new mongoose.Schema({
 	name: {
 		type: 'String', 
 		required : true
@@ -69,21 +40,38 @@ db_MyContacts_db_schema.Contact = new mongoose.Schema({
 	note: {
 		type: 'String'
 	},
-	phone: {
-		type: 'String'
-	},
-	surname: {
-		type: 'String'
-	},
 	//RELATIONS
-	company: {
+	sede: {
 		type: Schema.ObjectId,
-		ref : "Company"
+		ref : "Sede"
 	},
 	
 	
 	//EXTERNAL RELATIONS
 	/*
+	*/
+});
+
+
+ /**
+  * Sede
+  */
+db_MyContacts_db_schema.Sede = new mongoose.Schema({
+	address: {
+		type: 'String'
+	},
+	name: {
+		type: 'String'
+	},
+	//RELATIONS
+	
+	
+	//EXTERNAL RELATIONS
+	/*
+	sede: {
+		type: Schema.ObjectId,
+		ref : "Room"
+	},
 	*/
 });
 
@@ -95,8 +83,8 @@ var MyContacts_db_model = require('./MyContacts_db_crud.js');
 
 // Declare mongoose model
 
-db_MyContacts_db.Company = MyContacts_db_model.connection.model('Company', db_MyContacts_db_schema.Company );
-db_MyContacts_db.Contact = MyContacts_db_model.connection.model('Contact', db_MyContacts_db_schema.Contact );
+db_MyContacts_db.Room = MyContacts_db_model.connection.model('Room', db_MyContacts_db_schema.Room );
+db_MyContacts_db.Sede = MyContacts_db_model.connection.model('Sede', db_MyContacts_db_schema.Sede );
 
 module.exports = db_MyContacts_db;
 

@@ -1,3 +1,17 @@
+**** PROPERTIES SKAFFOLDER ****
+{
+    "overwrite": false,
+    "forEachObj": "db",
+    "_partials": [
+        {
+            "name": "partial",
+            "tagFrom": "//START IMPORT RESOURCE",
+            "tagTo": "//END IMPORT RESOURCE",
+            "template": "\n\t\t\trequire('./{{db.name}}_schema.js');\n\n\t\t\t{{#each db._resources}}\n\t\t\trequire('../resource/{{../db.name}}/{{name}}.js');\n\t\t\t{{/each}}\n\t\t\t\n\t\t"
+        }
+    ]
+}
+**** END PROPERTIES SKAFFOLDER ****
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -12,7 +26,7 @@ exports.connection;
  * Start database connection
  */
 connectDB = function()  {
-	const dbConnection_MyContacts_db = mongoose.createConnection('mongodb://' + properties.MyContacts_db_dbUrl, function(err){
+	const dbConnection_{{db.name}} = mongoose.createConnection('mongodb://' + properties.{{db.name}}_dbUrl, function(err){
 		if(err) {
 			logger.error(err);
 			setTimeout(function() {
@@ -22,16 +36,10 @@ connectDB = function()  {
 		}
 		else
 		{
-		    exports.connection = dbConnection_MyContacts_db;
-			logger.info("MongoDB connected at: " + properties.MyContacts_db_dbUrl);
+		    exports.connection = dbConnection_{{db.name}};
+			logger.info("MongoDB connected at: " + properties.{{db.name}}_dbUrl);
 			
 			//START IMPORT RESOURCE
-
-			require('./MyContacts_db_schema.js');
-
-			require('../resource/MyContacts_db/Room.js');
-			require('../resource/MyContacts_db/Sede.js');
-			
 			//END IMPORT RESOURCE
 		}
 		

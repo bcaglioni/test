@@ -1,3 +1,10 @@
+**** PROPERTIES SKAFFOLDER ****
+{
+    "overwrite": true,
+    "forEachObj": "oneTime",
+    "_partials": []
+}
+**** END PROPERTIES SKAFFOLDER ****
 /**
 
   _____                      _              _ _ _     _   _     _        __ _ _      
@@ -24,16 +31,7 @@ exports.authMapping = {
     'POST - /api/users/([^/])+/changePassword': ["ADMIN"],
 
     //YOUR SECURITY MAPPING
-	'POST - /api/rooms/*$' : null,
-	'DELETE - /api/rooms/([^/])+$' : null,
-	'GET - /api/rooms/([^/])+$' : null,
-	'GET - /api/rooms/*$' : null,
-	'POST - /api/rooms/([^/])+$' : null,
-	'POST - /api/sedes/*$' : null,
-	'DELETE - /api/sedes/([^/])+$' : null,
-	'GET - /api/sedes/([^/])+$' : null,
-	'GET - /api/sedes/*$' : null,
-	'POST - /api/sedes/([^/])+$' : null,
-	
+	{{#each resources}}{{#each _resources}}{{#each _services}}'{{method}} - /api{{../url}}{{#editUrlParamRegExp url}}{{/editUrlParamRegExp}}$' : {{#notNull _roles}}{{#joinObj _roles 'name'}}{{/joinObj}}{{/notNull}}{{#isNull _roles}}null{{/isNull}},
+	{{/each}}{{/each}}{{/each}}
 
 }
